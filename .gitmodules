@@ -13,6 +13,3 @@
 [submodule "models/ihd"]
 	path = models/ihd
 	url = https://github.com/mister-weeden/iad1.git
-[submodule "utils/dcm2niix"]
-	path = utils/dcm2niix
-	url = https://github.com/mister-weeden/dcm2niix.git

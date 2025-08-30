@@ -1,0 +1,34 @@
+{
+  "deepmedic": {
+    "last_checkpoint": null,
+    "best_dice_score": 0.0,
+    "training_pid": 21077,
+    "last_check": "2025-08-30T06:18:02.101031",
+    "iterations": 0,
+    "status": "training"
+  },
+  "dlca": {
+    "last_checkpoint": null,
+    "best_dice_score": 0.0,
+    "training_pid": 21083,
+    "last_check": "2025-08-30T06:18:02.170773",
+    "iterations": 0,
+    "status": "training"
+  },
+  "iad": {
+    "last_checkpoint": null,
+    "best_dice_score": 0.0,
+    "training_pid": 21090,
+    "last_check": "2025-08-30T06:18:02.239347",
+    "iterations": 0,
+    "status": "training"
+  },
+  "ihd": {
+    "last_checkpoint": null,
+    "best_dice_score": 0.0,
+    "training_pid": 21096,
+    "last_check": "2025-08-30T06:18:02.307741",
+    "iterations": 0,
+    "status": "training"
+  }
+}

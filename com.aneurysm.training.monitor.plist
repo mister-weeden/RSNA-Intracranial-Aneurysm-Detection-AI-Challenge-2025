@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.aneurysm.training.monitor</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/owner/work/monitor_training.py</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/owner/work</string>
+    
+    <key>StartInterval</key>
+    <integer>900</integer> <!-- 900 seconds = 15 minutes -->
+    
+    <key>StandardOutPath</key>
+    <string>/Users/owner/work/launchd_monitor.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Users/owner/work/launchd_monitor_error.log</string>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <false/>
+</dict>
+</plist>

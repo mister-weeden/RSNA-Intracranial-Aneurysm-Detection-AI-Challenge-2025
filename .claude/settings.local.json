@@ -4,7 +4,9 @@
       "Bash(git submodule add:*)",
       "Bash(mkdir:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(chmod:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []

@@ -53,7 +53,11 @@ class ModelTrainingMonitor:
             self.status = {
                 model: {
                     'last_checkpoint': None,
-                    'best_dice_score': 0.0,
+                    'best_auc_score': 0.0,
+                    'sensitivity': 0.0,
+                    'specificity': 0.0,
+                    'false_positive_rate': 1.0,
+                    'true_negative_rate': 0.0,
                     'training_pid': None,
                     'last_check': None,
                     'iterations': 0,
@@ -101,16 +105,16 @@ class ModelTrainingMonitor:
         
         latest = max(checkpoints, key=lambda p: p.stat().st_mtime)
         
-        # Try to extract dice score from filename or checkpoint
-        dice_score = self.extract_dice_score(latest)
+        # Try to extract AUC score from filename or checkpoint
+        auc_score = self.extract_auc_score(latest)
         
-        return str(latest), dice_score
+        return str(latest), auc_score
     
-    def extract_dice_score(self, checkpoint_path):
-        """Extract DICE score from checkpoint filename or content"""
+    def extract_auc_score(self, checkpoint_path):
+        """Extract AUC score from checkpoint filename or content"""
         # Try to extract from filename first
         filename = checkpoint_path.name
-        match = re.search(r'dice[_-]?(\d+\.?\d*)', filename, re.IGNORECASE)
+        match = re.search(r'auc[_-]?(\d+\.?\d*)', filename, re.IGNORECASE)
         if match:
             return float(match.group(1))
         
@@ -119,7 +123,7 @@ class ModelTrainingMonitor:
             import torch
             checkpoint = torch.load(checkpoint_path, map_location='cpu')
             if isinstance(checkpoint, dict):
-                for key in ['dice_score', 'best_dice', 'val_dice', 'test_dice']:
+                for key in ['auc_score', 'best_auc', 'val_auc', 'test_auc', 'roc_auc']:
                     if key in checkpoint:
                         return float(checkpoint[key])
         except:
@@ -129,11 +133,11 @@ class ModelTrainingMonitor:
     
     def check_improvement(self, model):
         """Check if model has improved"""
-        latest_checkpoint, dice_score = self.get_latest_checkpoint(model)
+        latest_checkpoint, auc_score = self.get_latest_checkpoint(model)
         
-        if latest_checkpoint and dice_score > self.status[model]['best_dice_score']:
-            logger.info(f"{model}: New best DICE score: {dice_score:.4f}")
-            self.status[model]['best_dice_score'] = dice_score
+        if latest_checkpoint and auc_score > self.status[model]['best_auc_score']:
+            logger.info(f"{model}: New best AUC score: {auc_score:.4f}")
+            self.status[model]['best_auc_score'] = auc_score
             self.status[model]['last_checkpoint'] = latest_checkpoint
             return True
         return False
@@ -209,13 +213,14 @@ class ModelTrainingMonitor:
 ## Automated Training Continuation - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 The training monitor has detected that {model} training has stopped.
-Current best DICE score: {self.status[model]['best_dice_score']:.4f}
+Current best AUC score: {self.status[model]['best_auc_score']:.4f}
 Last checkpoint: {self.status[model]['last_checkpoint']}
 
 ### Instructions for continuation:
 1. Resume from the latest checkpoint
-2. Continue training until improvement in aneurysm detection DICE score
-3. Target: Achieve DICE score > {self.status[model]['best_dice_score'] + 0.01:.4f}
+2. Continue training until improvement in aneurysm detection AUC score
+3. Target: Achieve AUC score > {self.status[model]['best_auc_score'] + 0.01:.4f}
+4. Monitor: Sensitivity, Specificity, False Positive Rate
 4. Save checkpoint when improvement is detected
 5. Implement early stopping if no improvement after 10 epochs
 
@@ -271,8 +276,8 @@ Last checkpoint: {self.status[model]['last_checkpoint']}
             if (datetime.now() - last_check).seconds < 300:  # 5 minutes cooldown
                 return False
         
-        # Restart if no checkpoint exists or DICE score is below threshold
-        if self.status[model]['best_dice_score'] < 0.85:  # Target 85% DICE
+        # Restart if no checkpoint exists or AUC score is below threshold
+        if self.status[model]['best_auc_score'] < 0.90:  # Target 90% AUC
             return True
         
         # Restart if iterations are below target
@@ -294,7 +299,10 @@ Last checkpoint: {self.status[model]['last_checkpoint']}
             report.extend([
                 f"\n{model.upper()}:",
                 f"  Status: {status['status']}",
-                f"  Best DICE: {status['best_dice_score']:.4f}",
+                f"  Best AUC: {status.get('best_auc_score', 0.0):.4f}",
+                f"  Sensitivity: {status.get('sensitivity', 0.0):.4f}",
+                f"  Specificity: {status.get('specificity', 0.0):.4f}",
+                f"  FPR: {status.get('false_positive_rate', 1.0):.4f}",
                 f"  Iterations: {status['iterations']}",
                 f"  Last Check: {status['last_check']}",
                 f"  PID: {status['training_pid']}"

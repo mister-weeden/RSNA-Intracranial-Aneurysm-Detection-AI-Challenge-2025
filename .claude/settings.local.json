@@ -6,7 +6,10 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(chmod:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(./install_scheduler.sh:*)",
+      "Bash(launchctl:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

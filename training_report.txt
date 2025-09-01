@@ -1,32 +1,44 @@
 
 ============================================================
-Training Status Report - 2025-08-30 06:18:02
+Training Status Report - 2025-08-31 07:52:53
 ============================================================
 
 DEEPMEDIC:
-  Status: training
-  Best DICE: 0.0000
+  Status: stopped
+  Best AUC: 0.0000
+  Sensitivity: 0.0000
+  Specificity: 0.0000
+  FPR: 1.0000
   Iterations: 0
-  Last Check: 2025-08-30T06:18:02.101031
-  PID: 21077
+  Last Check: 2025-08-31T07:52:53.654091
+  PID: 33600
 
 DLCA:
-  Status: training
-  Best DICE: 0.0000
+  Status: stopped
+  Best AUC: 0.0000
+  Sensitivity: 0.0000
+  Specificity: 0.0000
+  FPR: 1.0000
   Iterations: 0
-  Last Check: 2025-08-30T06:18:02.170773
-  PID: 21083
+  Last Check: 2025-08-31T07:52:53.696695
+  PID: 33607
 
 IAD:
-  Status: training
-  Best DICE: 0.0000
+  Status: stopped
+  Best AUC: 0.0000
+  Sensitivity: 0.0000
+  Specificity: 0.0000
+  FPR: 1.0000
   Iterations: 0
-  Last Check: 2025-08-30T06:18:02.239347
-  PID: 21090
+  Last Check: 2025-08-31T07:52:53.739136
+  PID: 33613
 
 IHD:
-  Status: training
-  Best DICE: 0.0000
+  Status: stopped
+  Best AUC: 0.0000
+  Sensitivity: 0.0000
+  Specificity: 0.0000
+  FPR: 1.0000
   Iterations: 0
-  Last Check: 2025-08-30T06:18:02.307741
-  PID: 21096
+  Last Check: 2025-08-31T07:52:53.782156
+  PID: 33619

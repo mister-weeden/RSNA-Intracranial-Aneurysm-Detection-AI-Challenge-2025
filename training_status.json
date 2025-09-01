@@ -2,33 +2,33 @@
   "deepmedic": {
     "last_checkpoint": null,
     "best_dice_score": 0.0,
-    "training_pid": 21077,
-    "last_check": "2025-08-30T06:18:02.101031",
+    "training_pid": 33600,
+    "last_check": "2025-08-31T07:52:53.654091",
     "iterations": 0,
-    "status": "training"
+    "status": "stopped"
   },
   "dlca": {
     "last_checkpoint": null,
     "best_dice_score": 0.0,
-    "training_pid": 21083,
-    "last_check": "2025-08-30T06:18:02.170773",
+    "training_pid": 33607,
+    "last_check": "2025-08-31T07:52:53.696695",
     "iterations": 0,
-    "status": "training"
+    "status": "stopped"
   },
   "iad": {
     "last_checkpoint": null,
     "best_dice_score": 0.0,
-    "training_pid": 21090,
-    "last_check": "2025-08-30T06:18:02.239347",
+    "training_pid": 33613,
+    "last_check": "2025-08-31T07:52:53.739136",
     "iterations": 0,
-    "status": "training"
+    "status": "stopped"
   },
   "ihd": {
     "last_checkpoint": null,
     "best_dice_score": 0.0,
-    "training_pid": 21096,
-    "last_check": "2025-08-30T06:18:02.307741",
+    "training_pid": 33619,
+    "last_check": "2025-08-31T07:52:53.782156",
     "iterations": 0,
-    "status": "training"
+    "status": "stopped"
   }
 }

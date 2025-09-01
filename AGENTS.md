@@ -40,3 +40,8 @@
 - Store datasets in `data/` and exclude from VCS. Do not commit PHI.
 - Ensure determinism: call `set_deterministic_seed(42)` when adding training/inference entry points.
 - GPU optional; code paths should run on CPU by default.
+
+## Roles & References
+- Role: see `ROLE.md` for the PhD‑level researcher responsibilities and workflow.
+- Experiment template: `experiments/EXPERIMENT_TEMPLATE.md` (copy to start a run doc).
+- SOTA tracker: `SOTA.md` (living bibliography and results table).

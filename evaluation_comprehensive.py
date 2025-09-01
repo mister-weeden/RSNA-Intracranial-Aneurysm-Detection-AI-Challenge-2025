@@ -15,7 +15,7 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import (
     roc_auc_score, average_precision_score, roc_curve, precision_recall_curve,
-    confusion_matrix, classification_report, bootstrap_confidence_interval
+    confusion_matrix, classification_report
 )
 from scipy import stats
 import matplotlib.pyplot as plt
@@ -105,11 +105,14 @@ class CompetitionScorer:
             Competition score or detailed breakdown dictionary
         """
         scores = {}
-        
+
+        # @cursor: ROC AUC = ∫_0^1 TPR(FPR) dFPR = P(s_pos > s_neg)+0.5·P(tie)
+
         # Calculate AUC_AP (aneurysm presence/absence)
         if 'aneurysm' in predictions and 'aneurysm' in ground_truth:
             try:
-                auc_ap = average_precision_score(
+                # @/@cursor TLDR: Use ROC AUC for baseline ~0.5 with random predictions
+                auc_ap = roc_auc_score(
                     ground_truth['aneurysm'], 
                     predictions['aneurysm']
                 )
@@ -127,7 +130,7 @@ class CompetitionScorer:
             char_key = f'char_{i}'
             if char_key in predictions and char_key in ground_truth:
                 try:
-                    auc_i = average_precision_score(
+                    auc_i = roc_auc_score(
                         ground_truth[char_key],
                         predictions[char_key]
                     )
@@ -365,6 +368,7 @@ class PerformanceAnalyzer:
         mcc = ((tp * tn) - (fp * fn)) / mcc_denominator if mcc_denominator > 0 else 0
         
         # AUC scores
+        # @cursor: ROC AUC = ∫_0^1 TPR(FPR) dFPR = P(s_pos > s_neg)+0.5·P(tie)
         try:
             auc_roc = roc_auc_score(y_true, y_pred)
         except:

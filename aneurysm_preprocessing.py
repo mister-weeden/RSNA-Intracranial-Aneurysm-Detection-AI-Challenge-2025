@@ -773,13 +773,17 @@ class AneurysmPreprocessingPipeline:
         return augmented, info
     
     def process_volume(self, volume: np.ndarray, 
-                      augment: bool = False) -> Dict[str, np.ndarray]:
+                      augment: bool = False,
+                      apply_vesselness: bool = True) -> Dict[str, np.ndarray]:
         """
         Complete preprocessing pipeline for a single volume.
+        
+        @/@cursor TLDR: Adds apply_vesselness flag; always returns 'final' composite
         
         Args:
             volume: Input 3D medical image
             augment: Whether to apply augmentation
+            apply_vesselness: If False, skip vesselness stage (fast path)
             
         Returns:
             Dictionary with processed volumes
@@ -791,8 +795,11 @@ class AneurysmPreprocessingPipeline:
         results['normalized'] = normalized
         
         # Step 2: Vessel enhancement (Frangi filter)
-        print("Applying Frangi vesselness filter...")
-        vesselness = self.frangi_vesselness_3d(normalized)
+        if apply_vesselness:
+            print("Applying Frangi vesselness filter...")
+            vesselness = self.frangi_vesselness_3d(normalized)
+        else:
+            vesselness = np.zeros_like(normalized)
         results['vesselness'] = vesselness
         
         # Step 3: Aneurysm-specific enhancement
@@ -817,6 +824,7 @@ class AneurysmPreprocessingPipeline:
             0.4 * aneurysm_enhanced
         )
         results['combined'] = combined
+        results['final'] = combined
         
         return results
     

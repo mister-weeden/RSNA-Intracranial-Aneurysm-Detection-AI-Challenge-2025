@@ -74,8 +74,20 @@ class ExperimentConfig:
     patience: int
     
     def to_dict(self) -> Dict:
-        """Convert to dictionary for serialization."""
-        return asdict(self)
+        """Convert to dictionary for serialization.
+        
+        @/@cursor TLDR: Coerces NumPy scalars to native Python types for JSON
+        """
+        def _convert(obj):
+            import numpy as _np
+            if isinstance(obj, dict):
+                return {k: _convert(v) for k, v in obj.items()}
+            if isinstance(obj, (list, tuple)):
+                return [ _convert(v) for v in obj ]
+            if isinstance(obj, _np.generic):
+                return obj.item()
+            return obj
+        return _convert(asdict(self))
     
     def get_hash(self) -> str:
         """Get unique hash for this configuration."""
